@@ -313,6 +313,112 @@ def main():
                     ans_word_q8 = gr.Markdown(visible=False)
         check_box_q8.select(fn.q8_checkbox_fn,inputs=[check_box_q8,show_df_q8],outputs=[show_df_q8_after])
         submit_btm_q8.click(fn.q8_btm_fn,inputs=[check_box_q8],outputs=[ans_pic_q8,ans_word_q8,show_df_q8,check_box_q8,show_df_q8_after,submit_btm_q8])
+        
+        with gr.Tab(label='問題九'):
+            gr.Markdown("""
+                        ### 問題九  
+                        我已經讀取dataframe了，
+                        接著我想插入一筆資料到到原本"data.csv"的前面，
+
+                        資料敘述(輸入資料請參考原始dataframe，格式需要完全相同，例如:"18 新竹市"[O]、"新竹市"[X]):
+                        113學年度、學校代碼9487、國立臺灣師範大學日間部學士班、總計10469、
+                        男生計4670、女生計5799、
+                        一年級男834、一年級女1214、二年級男987、二年級女1624、三年級男534、三年級女568、四年級男745、四年級女845、
+                        五年級男524、五年級女756、六年級男967、六年級女675、七年級男58、七年級女72、延修生男21、延修生女45、
+                        縣市名稱臺北市、體系別師範
+                        ```python
+                        import pandas  
+                        df = pandas.read_csv('data.csv')
+                        new_row = {
+                            "學年度":..., "學校代碼":..., "學校名稱":..., "日間∕進修別":..., "等級別":...,
+                            "總計":..., "男生計":..., "女生計":..., "一年級男":..., "一年級女":...,
+                            "二年級男":..., "二年級女":..., "三年級男":...,"三年級女":..., "四年級男":...,"四年級女":...,
+                            "五年級男":..., "五年級女":..., "六年級男":...,"六年級女":..., "七年級男":...,"七年級女":...,
+                            "延修生男":..., "延修生女":..., "縣市名稱":...,"體系別":...
+                        }
+
+                        ```
+                        """)
+            # choices1_q9 = gr.Textbox(label='請輸入「W」,「X」,「Y」,「Z」，並用空白隔開，以建立新的row',visible=True,interactive=True)
+            input_row = gr.Row(variant='panel',visible=True)
+            with input_row:
+                x = 80
+                text_box1_q9 = gr.Textbox(label='學年度', visible=True, interactive=True, min_width=x)
+                text_box2_q9 = gr.Textbox(label='學校代碼', visible=True, interactive=True, min_width=x)
+                text_box3_q9 = gr.Textbox(label='學校名稱', visible=True, interactive=True, min_width=x)
+                text_box4_q9 = gr.Textbox(label='日間∕進修別', visible=True, interactive=True, min_width=x)
+                text_box5_q9 = gr.Textbox(label='等級別', visible=True, interactive=True, min_width=x)
+                text_box6_q9 = gr.Textbox(label='總計', visible=True, interactive=True, min_width=x)
+                text_box7_q9 = gr.Textbox(label='男生計', visible=True, interactive=True, min_width=x)
+                text_box8_q9 = gr.Textbox(label='女生計', visible=True, interactive=True, min_width=x)
+                text_box9_q9 = gr.Textbox(label='一年級男', visible=True, interactive=True, min_width=x)
+                text_box10_q9 = gr.Textbox(label='一年級女', visible=True, interactive=True, min_width=x)
+                text_box11_q9 = gr.Textbox(label='二年級男', visible=True, interactive=True, min_width=x)
+                text_box12_q9 = gr.Textbox(label='二年級女', visible=True, interactive=True, min_width=x)
+                text_box13_q9 = gr.Textbox(label='三年級男', visible=True, interactive=True, min_width=x)
+                text_box14_q9 = gr.Textbox(label='三年級女', visible=True, interactive=True, min_width=x)
+                text_box15_q9 = gr.Textbox(label='四年級男', visible=True, interactive=True, min_width=x)
+                text_box16_q9 = gr.Textbox(label='四年級女', visible=True, interactive=True, min_width=x)
+                text_box17_q9 = gr.Textbox(label='五年級男', visible=True, interactive=True, min_width=x)
+                text_box18_q9 = gr.Textbox(label='五年級女', visible=True, interactive=True, min_width=x)
+                text_box19_q9 = gr.Textbox(label='六年級男', visible=True, interactive=True, min_width=x)
+                text_box20_q9 = gr.Textbox(label='六年級女', visible=True, interactive=True, min_width=x)
+                text_box21_q9 = gr.Textbox(label='七年級男', visible=True, interactive=True, min_width=x)
+                text_box22_q9 = gr.Textbox(label='七年級女', visible=True, interactive=True, min_width=x)
+                text_box23_q9 = gr.Textbox(label='延修生男', visible=True, interactive=True, min_width=x)
+                text_box24_q9 = gr.Textbox(label='延修生女', visible=True, interactive=True, min_width=x)
+                text_box25_q9 = gr.Textbox(label='縣市名稱', visible=True, interactive=True, min_width=x)
+                text_box26_q9 = gr.Textbox(label='體系別', visible=True, interactive=True, min_width=x)
+
+
+            show_df_q9 = gr.Dataframe(label='new_row',visible=False, height=200, interactive=False)
+            markdown_q9 = gr.Markdown("```new_row = pd.DataFrame(new_row)```",visible=False)
+            choices2_q9 = ["df = pd.insert([new_row, df], ignore_index = True)", "df = pd.concat([new_row, df], ignore_index = True)", "df = pd.add([new_row, df], ignore_index = True)"]
+            check_box_q9 = gr.Radio(choices=choices2_q9,label="Choose a right function to combine dataframe",visible=False, value=False)
+            show_df_q9_after = gr.Dataframe(visible=False, height=200, interactive=False)
+            error_text_q9 = gr.Textbox(visible=False)
+            answer_text_q9 =  gr.Markdown(visible=False)
+            submit_btm_q9 = gr.Button(value='Submit',variant='primary',visible=True)
+            with gr.Row():
+                with gr.Column(scale=1):
+                    ans_pic_q9 = gr.Image(visible=False)
+                with gr.Column(scale=2):
+                    ans_word_q9 = gr.Markdown(value='test',visible=False)
+            text_list = [text_box1_q9, text_box2_q9, text_box3_q9, text_box4_q9, text_box5_q9, text_box6_q9, text_box7_q9, text_box8_q9, text_box9_q9, text_box10_q9, text_box11_q9, text_box12_q9, text_box13_q9, text_box14_q9, text_box15_q9, text_box16_q9, text_box17_q9, text_box18_q9, text_box19_q9, text_box20_q9, text_box21_q9, text_box22_q9, text_box23_q9, text_box24_q9, text_box25_q9, text_box26_q9]
+            text_box1_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box2_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box3_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box4_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box5_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box6_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box7_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box8_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box9_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box10_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box11_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box12_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box13_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box14_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box15_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box16_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box17_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box18_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box19_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box20_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box21_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box22_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box23_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box24_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box25_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+            text_box26_q9.change(fn.q9_textbox_fn, inputs=text_list, outputs=[show_df_q9, check_box_q9, markdown_q9])
+
+
+            check_box_q9.select(fn.q9_checkbox_fn,
+                                inputs=text_list+[check_box_q9], 
+                                outputs=[show_df_q9_after, error_text_q9])
+            submit_btm_q9.click(fn.q9_btm_fn,
+                                inputs=text_list+[check_box_q9], 
+                                outputs=[ans_pic_q9, ans_word_q9, submit_btm_q9, answer_text_q9, error_text_q9, show_df_q9_after, check_box_q9, show_df_q9, markdown_q9, input_row])
 
     # demo.launch(share=True,auth=correct)
     demo.launch()

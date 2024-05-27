@@ -1,8 +1,32 @@
-import pandas as pd
+expected_values_q9 = {
+                    0: "113",
+                    1: "9487",
+                    2: "國立臺灣師範大學",
+                    3: "D 日",
+                    4: "B 學士",
+                    5: 10469,
+                    6: 4670,
+                    7: 5799,
+                    8: 834,
+                    9: 1214,
+                    10: 987,
+                    11: 1624,
+                    12: 534,
+                    13: 568,
+                    14: 745,
+                    15: 845,
+                    16: 524,
+                    17: 756,
+                    18: 967,
+                    19: 675,
+                    20: 58,
+                    21: 72,
+                    22: 21,
+                    23: 45,
+                    24: "30 臺北市",
+                    25: "3 師範"
+                }
 
-df = pd.read_csv('data.csv')
-df1 = df.groupby('學校名稱')['總計'].sum()
 
-df2 = pd.DataFrame(df1)
-# print("每個隊伍的總得分:")
-print(df2)
+for idx, expected in expected_values_q9.items():
+    print(idx,expected)

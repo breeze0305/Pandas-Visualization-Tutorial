@@ -46,6 +46,34 @@ class FunctionsClass():
                     "df['體系別'].value_counts()":0,
                     "df['體系別'].sort_values()":1
                         }
+        self.expected_values_q9 = {
+                    0: "113",
+                    1: "9487",
+                    2: "國立臺灣師範大學",
+                    3: "D 日",
+                    4: "B 學士",
+                    5: 10469,
+                    6: 4670,
+                    7: 5799,
+                    8: 834,
+                    9: 1214,
+                    10: 987,
+                    11: 1624,
+                    12: 534,
+                    13: 568,
+                    14: 745,
+                    15: 845,
+                    16: 524,
+                    17: 756,
+                    18: 967,
+                    19: 675,
+                    20: 58,
+                    21: 72,
+                    22: 21,
+                    23: 45,
+                    24: "30 臺北市",
+                    25: "3 師範"
+                }
     def q1_checkbox_fn(self,check_str,df_file): #data.csv
         check_idx = self.choices_q1.get(check_str,-1)
         if check_idx == 0:
@@ -206,10 +234,18 @@ class FunctionsClass():
     
     def q4_btm_fn(self, check_str1, check_str2):
         correct_text = """
-                    恭喜答對！  
-                    我們可以利用程式對某個Column做分組，再逐一判斷dataframe裡面有相關的關鍵字的data，這樣的方法可以讓我們在處理大量資料時，可以直接做簡單的計算。  
-                    再透過sort_values來對'總計'進行排序，便可以找出總人數最多的學校。
-                    當ascending是True時，sort排序為由小到大。  
+                    恭喜答對！
+                    使用.groupby()可以將dataframe依照括號中填入的欄位進行分組，可以同時填入多個條件。
+                    例如: 
+                    grouped = df.groupby('學校名稱', '學校代碼')
+
+                    接著就可以對想要的欄位使用統計函數如.sum(), .mean(), .count()等。
+                    最後，
+                    .sort_values(by='X', ascending=False)
+                    可以將資料以'X'的大小進行排序，
+                    ascending=False
+                    時為由大到小排序，反之則是由小到大排序。
+                    請繼續第五題！ 
                     """
         wrong_text = """
                     答錯囉！  
@@ -410,3 +446,97 @@ class FunctionsClass():
             return self.correct,gr.Markdown(value=correct_text,visible=True),self.hide,self.hide,self.hide,self.hide
         else:
             return self.wrong,gr.Markdown(value=wrong_text,visible=True),self.hide,self.hide,self.hide,self.hide
+        
+    def q9_textbox_fn(self,*text_list):
+        new_row = {
+            "學年度": text_list[0], "學校代碼": text_list[1], "學校名稱": text_list[2], "日間∕進修別": text_list[3], "等級別": text_list[4],
+            "總計": text_list[5], "男生計": text_list[6], "女生計": text_list[7], "一年級男": text_list[8], "一年級女": text_list[9],
+            "二年級男": text_list[10], "二年級女": text_list[11], "三年級男": text_list[12], "三年級女": text_list[13], "四年級男": text_list[14], "四年級女": text_list[15],
+            "五年級男": text_list[16], "五年級女": text_list[17], "六年級男": text_list[18], "六年級女": text_list[19], "七年級男": text_list[20], "七年級女": text_list[21],
+            "延修生男": text_list[22], "延修生女": text_list[23], "縣市名稱": text_list[24], "體系別": text_list[25]
+        }
+        temp_df = pd.DataFrame(new_row, index=[0])
+        return gr.Dataframe(value=temp_df,visible=True),gr.Radio(visible=True),gr.Markdown(visible=True)
+    
+    def q9_checkbox_fn(self,*text_list):
+        new_row = {
+            "學年度": text_list[0], "學校代碼": text_list[1], "學校名稱": text_list[2], "日間∕進修別": text_list[3], "等級別": text_list[4],
+            "總計": text_list[5], "男生計": text_list[6], "女生計": text_list[7], "一年級男": text_list[8], "一年級女": text_list[9],
+            "二年級男": text_list[10], "二年級女": text_list[11], "三年級男": text_list[12], "三年級女": text_list[13], "四年級男": text_list[14], "四年級女": text_list[15],
+            "五年級男": text_list[16], "五年級女": text_list[17], "六年級男": text_list[18], "六年級女": text_list[19], "七年級男": text_list[20], "七年級女": text_list[21],
+            "延修生男": text_list[22], "延修生女": text_list[23], "縣市名稱": text_list[24], "體系別": text_list[25]
+        }
+        check_str = text_list[26]
+        if check_str == "df = pd.concat([new_row, df], ignore_index = True)":
+            df = pd.read_csv("data.csv")
+            new_row = pd.DataFrame([new_row])
+            df = pd.concat([new_row, df], ignore_index = True)
+            return gr.Dataframe(value=df, visible=True), self.hide
+        elif check_str == "df = pd.insert([new_row, df], ignore_index = True)":
+            error = ''' 
+            Traceback (most recent call last):
+                df = pd.insert([new_row, df], ignore_index = True)
+            AttributeError: module 'pandas' has no attribute 'insert'
+            '''
+            return self.hide, gr.Textbox(value=error, visible=True)
+        elif check_str == "df = pd.add([new_row, df], ignore_index = True)":
+            error = '''
+            Traceback (most recent call last):
+                df = pd.add([new_row, df], ignore_index = True)
+            AttributeError: module 'pandas' has no attribute 'add'
+            '''
+            return self.hide, gr.Textbox(value=error, visible=True)
+        
+    def q9_btm_fn(self,*list_value):
+        correct_text = """
+            恭喜答對！
+            當想要建立一個DataFrame屬性的資料時，可以透過字典{}的方式，
+            將column放在「鍵」的位置，對應的數值放在「值」的位置，
+            接著再藉由pd.DataFrame()來轉換屬性。
+
+            當要插入data至一DataFrame時，
+            我們可以藉由.concat()來合併插入的資料
+            而ignore_index = True可以忽略兩data之間原始的行索引，
+            並為新組成的DataFrame建立新的順序索引。
+        """
+        wrong_text = """
+            答錯囉！  
+            請仔細查看按下對應按鈕後，程式碼的變化。  
+            並仔細檢查每個選項之間的不同！  
+            按下F5刷新網頁重新答題！  
+        """
+        full_code = """
+        完整程式碼如下:
+        ```
+            import pandas as pd
+
+            df = pd.read_csv("data.csv")
+            new_row = data = {
+                    "學年度": '113',"學校代碼": '9487', "學校名稱": '國立臺灣師範大學', "日間∕進修別": 'D 日', "等級別": 'B 學士',
+                    "總計": 10469, "男生計": 4670, "女生計": 5799, "一年級男": 834, "一年級女": 1214,
+                    "二年級男": 987, "二年級女": 1624, "三年級男": 534, "三年級女": 568, "四年級男": 745, "四年級女": 845,
+                    "五年級男": 524, "五年級女": 756, "六年級男": 967, "六年級女": 675, "七年級男": 58, "七年級女": 72,
+                    "延修生男": 21, "延修生女": 45, "縣市名稱": '30 臺北市',"體系別": '3 師範'
+                }
+
+            new_row_df =pd.DataFrame([new_row])
+            df = pd.concat([new_row_df, df], ignore_index = True)
+            print(df)
+        ```
+        """
+        ans = True
+        check_str = list_value[26]
+        for idx, expected in self.expected_values_q9.items():
+            actual = list_value[idx]
+            if isinstance(expected, int):
+                actual = int(actual)
+            if actual != expected:
+                ans = False
+                break
+    
+    
+        if ans and check_str == "df = pd.concat([new_row, df], ignore_index = True)":
+            return self.correct,gr.Markdown(value=correct_text,visible=True),self.hide, gr.Markdown(value=full_code,visible=True),self.hide,self.hide,self.hide,self.hide,self.hide,gr.Row(visible=False)
+        else:
+            return self.wrong,gr.Markdown(value=wrong_text, visible=True),self.hide,self.hide,self.hide,self.hide,self.hide,self.hide,self.hide,gr.Row(visible=False)
+
