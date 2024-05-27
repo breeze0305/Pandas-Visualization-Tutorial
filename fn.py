@@ -42,7 +42,10 @@ class FunctionsClass():
                         "pandas.csv('new_data.csv',encoding='utf-8-sig')":2,
                         "data.csv('new_data.csv',encoding='utf-8-sig')":3,
                         }  
-        
+        self.choices_q8 = {
+                    "df['體系別'].value_counts()":0,
+                    "df['體系別'].sort_values()":1
+                        }
     def q1_checkbox_fn(self,check_str,df_file): #data.csv
         check_idx = self.choices_q1.get(check_str,-1)
         if check_idx == 0:
@@ -369,3 +372,41 @@ class FunctionsClass():
         x = list(df.columns)
         random.shuffle(x)
         return x
+
+    def q8_get_dataframe(self):
+        df = pd.read_csv('data.csv')
+        df = df.drop_duplicates(subset=['學校名稱', '體系別']) 
+
+        return df
+    
+    def q8_checkbox_fn(self,check_str,dataframe):
+        check_idx = self.choices_q8.get(check_str,-1)
+        df = dataframe.drop_duplicates(subset=['學校名稱', '體系別'])
+        if check_idx == 0:
+            s = df['體系別'].value_counts()
+            df_8 = s.reset_index()
+            df_8.columns = ['體系別', '學校數量']
+            return gr.Dataframe(value=df_8,height=200,visible=True,interactive=False)
+        elif check_idx == 1:
+            s = df['體系別'].sort_values()
+            df_8 = s.reset_index()
+            return gr.Dataframe(value=df_8,height=200,visible=True,interactive=False)
+    
+    def q8_btm_fn(self,check_str):
+    #ans_pic_q8,ans_word_q8,show_df_q8,check_box_q8,show_df_q8_after,error_text_q8,submit_btm_q8
+        correct_text = """
+                        恭喜答對！
+                        我們可以利用drop_duplicates，刪除重複項後計算dataframe當中全部學校的體系別數量，  
+                        並透過sort_values來對'體系別'進行記數，便可以列出各個體系別的學校數量。   
+                        """
+        wrong_text = """
+                    答錯囉！  
+                    請仔細查看按下對應按鈕後，結果的變化。  
+                    並仔細檢查每個選項之間的不同！  
+                    按下F5刷新網頁重新答題！  
+                    """
+        check_idx = self.choices_q8.get(check_str,-1)
+        if check_idx == 0:
+            return self.correct,gr.Markdown(value=correct_text,visible=True),self.hide,self.hide,self.hide,self.hide
+        else:
+            return self.wrong,gr.Markdown(value=wrong_text,visible=True),self.hide,self.hide,self.hide,self.hide

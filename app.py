@@ -286,6 +286,33 @@ def main():
         check_box_q7.select(fn.q7_checkbox_fn,inputs=[check_box_q7],outputs=[show_df_q7,check_box2_q7])
         check_box2_q7.select(fn.q7_checkbox2_fn,inputs=[check_box2_q7],outputs=[error_text2_q7,file_q7])
         submit_btm_q7.click(fn.q7_btm_fn,inputs=[check_box_q7,check_box2_q7],outputs=[ans_pic_q7,ans_word_q7,dl_btm_q7,show_df_q7,check_box_q7,df1_q7,df2_q7,check_box2_q7,markdown_q7,submit_btm_q7,file_q7])
+        
+        with gr.Tab(label='問題八'):
+            gr.Markdown("""
+                        ### 問題八  
+                        我想用pandas求出dataframe當中各體系別的學校數量。  
+                        我先透過drop_duplicates()將重複的學校名稱和體系別刪除，接著我想要用什麼函數來計算體系別的學校數量呢?
+                        ```python
+                        import pandas
+
+                        df = pandas.read_csv('data.csv')
+                        df = df.drop_duplicates(subset=['學校名稱', '體系別'])
+                        ...  
+                        ```
+                        """)
+            show_df_q8 = gr.Dataframe(value=fn.q8_get_dataframe(), visible=True,interactive=False)
+            choices_q8 = ["df['體系別'].value_counts()","df['體系別'].sort_values()"]
+            random.shuffle(choices_q8)
+            check_box_q8 = gr.Radio(choices=choices_q8,label='choose the correct function',value=False)
+            show_df_q8_after = gr.Dataframe(visible=False,interactive=False)
+            submit_btm_q8 = gr.Button(value='Submit',variant='primary',visible=True)
+            with gr.Row():
+                with gr.Column(scale=1):
+                    ans_pic_q8 = gr.Image(visible=False)
+                with gr.Column(scale=2):
+                    ans_word_q8 = gr.Markdown(visible=False)
+        check_box_q8.select(fn.q8_checkbox_fn,inputs=[check_box_q8,show_df_q8],outputs=[show_df_q8_after])
+        submit_btm_q8.click(fn.q8_btm_fn,inputs=[check_box_q8],outputs=[ans_pic_q8,ans_word_q8,show_df_q8,check_box_q8,show_df_q8_after,submit_btm_q8])
 
     # demo.launch(share=True,auth=correct)
     demo.launch()
