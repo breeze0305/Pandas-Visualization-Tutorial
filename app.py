@@ -317,15 +317,14 @@ def main():
         with gr.Tab(label='問題九'):
             gr.Markdown("""
                         ### 問題九  
-                        我已經讀取dataframe了，
-                        接著我想插入一筆資料到到原本"data.csv"的前面，
+                        我已經讀取dataframe了，  
+                        接著我想插入一筆資料到到原本"data.csv"的前面，  
 
-                        資料敘述(輸入資料請參考原始dataframe，格式需要完全相同，例如:"18 新竹市"[O]、"新竹市"[X]):
-                        113學年度、學校代碼9487、國立臺灣師範大學日間部學士班、總計10469、
-                        男生計4670、女生計5799、
-                        一年級男834、一年級女1214、二年級男987、二年級女1624、三年級男534、三年級女568、四年級男745、四年級女845、
-                        五年級男524、五年級女756、六年級男967、六年級女675、七年級男58、七年級女72、延修生男21、延修生女45、
-                        縣市名稱臺北市、體系別師範
+                        資料敘述(輸入資料請參考原始dataframe，格式需要完全相同，例如:"18 新竹市"[O]、"新竹市"[X]):  
+                        113學年度、學校代碼9487、國立臺灣師範大學日間部學士班、總計10469、男生計4670、女生計5799、  
+                        一年級男834、一年級女1214、二年級男987、二年級女1624、三年級男534、三年級女568、四年級男745、四年級女845、  
+                        五年級男524、五年級女756、六年級男967、六年級女675、七年級男58、七年級女72、延修生男21、延修生女45、  
+                        縣市名稱臺北市、體系別師範  
                         ```python
                         import pandas  
                         df = pandas.read_csv('data.csv')
@@ -420,8 +419,8 @@ def main():
                                 inputs=text_list+[check_box_q9], 
                                 outputs=[ans_pic_q9, ans_word_q9, submit_btm_q9, answer_text_q9, error_text_q9, show_df_q9_after, check_box_q9, show_df_q9, markdown_q9, input_row])
 
-    # demo.launch(share=True,auth=correct)
-    demo.launch()
+    demo.launch(share=True,auth=correct)
+    # demo.launch()
     
 if __name__ == "__main__":
     random.seed(time.time())
